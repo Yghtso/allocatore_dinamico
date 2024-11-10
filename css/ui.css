@@ -1,0 +1,19 @@
+body {
+    background-color: #333;
+}
+
+h1 {
+    color: whitesmoke;
+    text-align: center;
+}
+
+.optionsContainer {
+    background-color: #2e2e2e;
+    padding: 1%;
+}
+
+.optionContainer {
+    background-color: #272727;
+    padding: 2%;
+    border-color: white;
+}
