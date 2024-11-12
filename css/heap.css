@@ -14,9 +14,11 @@
 #Block {
 
     background-color: #1c1c1c;
-    width: 90%;
-    height: 96%;
     border-radius: 10px;
+
+    width: calc(100% - 10px); /* Adjust width for margin */
+    height: calc(100% - 10px); /* Adjust height for margin */
+    margin: 5px;
 
     display: flex;
     justify-content: center;
