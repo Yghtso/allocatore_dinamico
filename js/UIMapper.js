@@ -1,5 +1,3 @@
-const HeapRef = document.getElementById("Heap");
-
 document.getElementById("InitMemory").addEventListener("click", () => {
     let n_bytes_to_alloc = document.getElementById("InitBytesInput").value;
 
@@ -12,17 +10,45 @@ document.getElementById("InitMemory").addEventListener("click", () => {
     }
 });
 
-document.getElementById("AllocateButton").addEventListener("click", () => Allocate());
+document.getElementById("AllocateButton").addEventListener("click", () => {
+    let n_bytes_to_alloc = document.getElementById("AllocBytesInput").value;
+    let label = document.getElementById("AllocLabelInput").value;
+
+    let success = Allocate(n_bytes_to_alloc, label);
+
+    if (!success) {
+        alert("Non ci sono blocchi disponibili per l allocazione del blocco di memoria da " + n_bytes_to_alloc + " bytes");
+    } else {
+        displayHeap();
+    }
+
+});
 document.getElementById("FreeButton").addEventListener("click", () => Free());
 document.getElementById("DefragButton").addEventListener("click", () => Defrag());
 
 function displayHeap() {
 
-    HeapRef.innerHTML ="";
-    console.log(BlockMap.length);
-    BlockMap.forEach(Block => {
-        let BlockDiv = document.createElement("div");
+    const HeapRef = document.getElementById("Heap");
+    while (HeapRef.firstChild) {
+        HeapRef.removeChild(HeapRef.firstChild);
+    }
 
-        HeapRef.appendChild(BlockDiv);
+    BlockMap.forEach(Block => {
+        let Div = document.createElement("div");
+        Div.style.height = (HeapRef.clientHeight * Block.size / HeapSize) + "px";
+        Div.style.display = "flex";
+        Div.style.justifyContent = "center";
+        Div.style.alignItems = "center";
+
+        let BlockDiv = document.createElement("div");
+        BlockDiv.style.backgroundColor = Block.color;
+        BlockDiv.textContent = Block.label + "   (  SIZE  " + Block.size + ")";
+
+        BlockDiv.id = "Block";
+
+        Div.appendChild(BlockDiv);
+        HeapRef.appendChild(Div);
     });
 }
+
+window.addEventListener('resize', displayHeap);
