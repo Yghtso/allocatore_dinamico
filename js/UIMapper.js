@@ -1,12 +1,13 @@
 document.getElementById("InitMemory").addEventListener("click", () => {
-    let n_bytes_to_alloc = document.getElementById("InitBytesInput").value;
+    let n_bytes_to_alloc = parseInt(document.getElementById("InitBytesInput").value);
 
     let success = Init(n_bytes_to_alloc);
 
     if (!success) {
         alert("La memoria massima di inizializzazione è 1024 Bytes");
     } else {
-        displayHeap();
+        //displayHeap();
+        console.log(BlockMap);
     }
 });
 
@@ -16,14 +17,32 @@ document.getElementById("AllocateButton").addEventListener("click", () => {
 
     let success = Allocate(n_bytes_to_alloc, label);
 
-    if (!success) {
+    if (!success && AlreadyExistSameLabel(label) !== undefined) {
+        alert("Cè gia un blocco di memoria chiamato : " + label);
+    } else if (!success && !AlreadyExistSameLabel(label)) {
         alert("Non ci sono blocchi disponibili per l allocazione del blocco di memoria da " + n_bytes_to_alloc + " bytes");
     } else {
-        displayHeap();
+        //displayHeap();
+        console.log(BlockMap);
     }
 
 });
-document.getElementById("FreeButton").addEventListener("click", () => Free());
+
+document.getElementById("FreeButton").addEventListener("click", () => {
+    
+    let label = document.getElementById("FreeLabelInput").value;
+
+    let success = Free(label);
+
+    if (!success) {
+        alert("Non ci sono blocchi di memoria allocati con quel nome");
+    } else {
+        //displayHeap();
+        console.log(BlockMap);
+    }
+
+});
+
 document.getElementById("DefragButton").addEventListener("click", () => Defrag());
 
 function displayHeap() {
