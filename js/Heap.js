@@ -29,8 +29,7 @@ function Allocate(number_of_bytes, label) {
     let sameLabelBlock = AlreadyExistSameLabel(label);
     let sameLabelBlockAllocated = sameLabelBlock === undefined ? false : sameLabelBlock.allocated;
 
-    if (condition) {
-        n_bytes_to_alloc < 0;
+    if (n_bytes_to_alloc < 0) {
         return success;
     }
 
